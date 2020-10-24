@@ -6,7 +6,7 @@
 &nbsp;
 ## Inicio Rápido  
 
-En el directorio raíz hay un archivo .env que contiene las variables de entorno TRELLO_API_KEY y TRELLO_TOKEN. Agregar la Api Key y el Token obtenido con la cuenta de Trello que se desee utilizar. Ej.: TRELLO_API_KEY=yourtrelloapikey / TRELLO_TOKEN=yourtrellotoken.
+En el directorio raíz hay un archivo .env que contiene las variables de entorno TRELLO_API_KEY y TRELLO_TOKEN. Agregar la Api Key y el Token obtenido con la cuenta de Trello que se desee utilizar. Ej.: TRELLO_API_KEY=suapikeydetrello / TRELLO_TOKEN=sutokendetrello.
 
 ``` bash
 # Instalar dependencias en la carpeta raíz
