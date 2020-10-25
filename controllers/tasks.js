@@ -56,7 +56,7 @@ const addTask = async (req, res) => {
 
     } catch (err) {
 
-        console.log(err);
+        res.status(400).json({ msg: "Oops! Something went wrong. Please try again!" });;
 
     }
   
