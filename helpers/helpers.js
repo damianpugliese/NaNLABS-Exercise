@@ -15,15 +15,14 @@ const addIssueCard = async (task, TODOListId, res) => {
         const cardResponse = await fetch(`https://api.trello.com/1/cards?key=${trelloApiKey}&token=${trelloToken}&name=${title}&desc=${description}&idList=${TODOListId}`, {
             method: 'POST'
         });
-    
+
         if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
 
-    } catch(err) {
+    } catch (err) {
 
         res.status(400).json({ msg: "Oops! Something went wrong. Please try again!" });;
 
     }
-
 
 }
 
@@ -35,7 +34,7 @@ const addBugCard = async (task, TODOListId, membersOfTheBoard, boardLabels, res)
     if (!description) return res.status(400).json({ msg: 'description are required' });
 
     // Checking that at least one member exist and asign a random member to the task
-    if(membersOfTheBoard.length === 0) return res.status(400).json({ msg: 'There is no members in the current board. Please create one at least' })
+    if (membersOfTheBoard.length === 0) return res.status(400).json({ msg: 'There is no members in the current board. Please create one at least' })
 
     const title = `bug-fix-${Math.floor(Math.random() * 1000)}`;
 
@@ -49,19 +48,18 @@ const addBugCard = async (task, TODOListId, membersOfTheBoard, boardLabels, res)
     const labelBugId = labelBug[0].id;
 
     try {
-        
+
         const cardResponse = await fetch(`https://api.trello.com/1/cards?key=${trelloApiKey}&token=${trelloToken}&name=${title}&desc=${description}&idList=${TODOListId}&idMembers=${[randomMemberId]}&idLabels=${[labelBugId]}`, {
             method: 'POST'
         });
-    
+
         if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
 
-    } catch(err) {
+    } catch (err) {
 
         res.status(400).json({ msg: "Oops! Something went wrong. Please try again!" });;
 
     }
-
 
 }
 
@@ -71,7 +69,7 @@ const addTaskCard = async (task, TODOListId, boardLabels, res) => {
 
     if (!title || !category) return res.status(400).json({ msg: 'title and category are required' });
 
-    if(!categories.includes(category)) return res.status(400).json({ msg: `Task category must be one of the options: ${categories.join(', ')}` });
+    if (!categories.includes(category)) return res.status(400).json({ msg: `Task category must be one of the options: ${categories.join(', ')}` });
 
     // Checking that the Category label exist and asign the Category label to the Card
     const categoryLabel = boardLabels.filter(boardLabel => boardLabel.name === `${category}`);
@@ -81,11 +79,11 @@ const addTaskCard = async (task, TODOListId, boardLabels, res) => {
     const categoryId = categoryLabel[0].id;
 
     try {
-        
+
         const cardResponse = await fetch(`https://api.trello.com/1/cards?key=${trelloApiKey}&token=${trelloToken}&name=${title}&idList=${TODOListId}&idLabels=${[categoryId]}`, {
             method: 'POST'
         });
-    
+
         if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
 
     } catch (err) {
@@ -94,11 +92,10 @@ const addTaskCard = async (task, TODOListId, boardLabels, res) => {
 
     }
 
-
 }
 
 module.exports = {
     addIssueCard,
-    addBugCard, 
+    addBugCard,
     addTaskCard
 }

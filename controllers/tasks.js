@@ -11,14 +11,14 @@ const addTask = async (req, res) => {
 
     if (Object.entries(task).length === 0) return res.status(400).json({ msg: 'Task is Empty' });
     if (!task.type) return res.status(400).json({ msg: `Task type is required` });
-    if(!tasksTypesEnums.includes(task.type)) return res.status(400).json({ msg: `Task type must be one of the options: ${tasksTypesEnums.join(', ')}` });
+    if (!tasksTypesEnums.includes(task.type)) return res.status(400).json({ msg: `Task type must be one of the options: ${tasksTypesEnums.join(', ')}` });
 
     let TODOListId;
     let membersOfTheBoard;
     let boardLabels;
 
     try {
-        
+
         // Checking that at least one Boards exist and getting the Boards Ids
 
         const boardsResponse = await fetch(`https://api.trello.com/1/members/me/boards?key=${trelloApiKey}&token=${trelloToken}`);
@@ -71,7 +71,6 @@ const addTask = async (req, res) => {
         res.status(400).json({ msg: "Oops! Something went wrong. Please try again!" });;
 
     }
-  
 
 }
 
