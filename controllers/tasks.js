@@ -20,6 +20,7 @@ const addTask = async (req, res) => {
     try {
         
         // Checking that at least one Boards exist and getting the Boards Ids
+
         const boardsResponse = await fetch(`https://api.trello.com/1/members/me/boards?key=${trelloApiKey}&token=${trelloToken}`);
         const boards = await boardsResponse.json();
         if (boards.length === 0) return res.status(400).json({ msg: "There isn't any Board Created. You must to create one" });
@@ -54,20 +55,23 @@ const addTask = async (req, res) => {
         const boardLabelsResponse = await fetch(`https://api.trello.com/1/boards/${currentBoard.id}/labels?key=${trelloApiKey}&token=${trelloToken}`);
         boardLabels = await boardLabelsResponse.json();
 
+        // Adding Cards by Type
+
+        switch (task.type) {
+            case 'issue':
+                addIssueCard(task, TODOListId, res);
+            case 'bug':
+                addBugCard(task, TODOListId, membersOfTheBoard, boardLabels, res);
+            case 'task':
+                addTaskCard(task, TODOListId, boardLabels, res);
+        }
+
     } catch (err) {
 
         res.status(400).json({ msg: "Oops! Something went wrong. Please try again!" });;
 
     }
   
-    switch (task.type) {
-        case 'issue':
-            addIssueCard(task, TODOListId, res);
-        case 'bug':
-            addBugCard(task, TODOListId, membersOfTheBoard, boardLabels, res);
-        case 'task':
-            addTaskCard(task, TODOListId, boardLabels, res);
-    }
 
 }
 

@@ -10,11 +10,20 @@ const addIssueCard = async (task, TODOListId, res) => {
 
     if (!title || !description) return res.status(400).json({ msg: 'title and description are required' });
 
-    const cardResponse = await fetch(`https://api.trello.com/1/cards?key=${trelloApiKey}&token=${trelloToken}&name=${title}&desc=${description}&idList=${TODOListId}`, {
-        method: 'POST'
-    });
+    try {
 
-    if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
+        const cardResponse = await fetch(`https://api.trello.com/1/cards?key=${trelloApiKey}&token=${trelloToken}&name=${title}&desc=${description}&idList=${TODOListId}`, {
+            method: 'POST'
+        });
+    
+        if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
+
+    } catch(err) {
+
+        res.status(400).json({ msg: "Oops! Something went wrong. Please try again!" });;
+
+    }
+
 
 }
 
@@ -39,11 +48,20 @@ const addBugCard = async (task, TODOListId, membersOfTheBoard, boardLabels, res)
 
     const labelBugId = labelBug[0].id;
 
-    const cardResponse = await fetch(`https://api.trello.com/1/cards?key=${trelloApiKey}&token=${trelloToken}&name=${title}&desc=${description}&idList=${TODOListId}&idMembers=${[randomMemberId]}&idLabels=${[labelBugId]}`, {
-        method: 'POST'
-    });
+    try {
+        
+        const cardResponse = await fetch(`https://api.trello.com/1/cards?key=${trelloApiKey}&token=${trelloToken}&name=${title}&desc=${description}&idList=${TODOListId}&idMembers=${[randomMemberId]}&idLabels=${[labelBugId]}`, {
+            method: 'POST'
+        });
+    
+        if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
 
-    if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
+    } catch(err) {
+
+        res.status(400).json({ msg: "Oops! Something went wrong. Please try again!" });;
+
+    }
+
 
 }
 
@@ -62,11 +80,20 @@ const addTaskCard = async (task, TODOListId, boardLabels, res) => {
 
     const categoryId = categoryLabel[0].id;
 
-    const cardResponse = await fetch(`https://api.trello.com/1/cards?key=${trelloApiKey}&token=${trelloToken}&name=${title}&idList=${TODOListId}&idLabels=${[categoryId]}`, {
-        method: 'POST'
-    });
+    try {
+        
+        const cardResponse = await fetch(`https://api.trello.com/1/cards?key=${trelloApiKey}&token=${trelloToken}&name=${title}&idList=${TODOListId}&idLabels=${[categoryId]}`, {
+            method: 'POST'
+        });
+    
+        if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
 
-    if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
+    } catch (err) {
+
+        res.status(400).json({ msg: "Oops! Something went wrong. Please try again!" });;
+
+    }
+
 
 }
 
