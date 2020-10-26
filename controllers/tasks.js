@@ -33,6 +33,7 @@ const addTask = async (req, res) => {
 
         for (let id of boardsIds) {
             const listResponse = await fetch(`https://api.trello.com/1/boards/${id}/lists?key=${trelloApiKey}&token=${trelloToken}`);
+            if (listResponse.status !== 200) return res.status(listResponse.status).json({ msg: `${listResponse.statusText}` });
             const listsByBoard = await listResponse.json();
             listsByBoard.forEach(listByBoard => {
                 lists.push(listByBoard);
@@ -48,12 +49,14 @@ const addTask = async (req, res) => {
         // Getting members of the board
 
         const currentBoardResponse = await fetch(`https://api.trello.com/1/lists/${TODOListId}/board?key=${trelloApiKey}&token=${trelloToken}`);
+        if (currentBoardResponse.status !== 200) return res.status(currentBoardResponse.status).json({ msg: `${currentBoardResponse.statusText}` });
         const currentBoard = await currentBoardResponse.json();
         membersOfTheBoard = currentBoard.memberships;
 
         // Getting labels of the board
 
         const boardLabelsResponse = await fetch(`https://api.trello.com/1/boards/${currentBoard.id}/labels?key=${trelloApiKey}&token=${trelloToken}`);
+        if (boardLabelsResponse.status !== 200) return res.status(boardLabelsResponse.status).json({ msg: `${boardLabelsResponse.statusText}` });
         boardLabels = await boardLabelsResponse.json();
 
         // Adding Cards by Type

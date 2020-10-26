@@ -16,6 +16,7 @@ const addIssueCard = async (task, TODOListId, res) => {
             method: 'POST'
         });
 
+        if (cardResponse.status !== 200) return res.status(cardResponse.status).json({ msg: `${cardResponse.statusText}` });
         if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
 
     } catch (err) {
@@ -53,6 +54,7 @@ const addBugCard = async (task, TODOListId, membersOfTheBoard, boardLabels, res)
             method: 'POST'
         });
 
+        if (cardResponse.status !== 200) return res.status(cardResponse.status).json({ msg: `${cardResponse.statusText}` });
         if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
 
     } catch (err) {
@@ -84,6 +86,7 @@ const addTaskCard = async (task, TODOListId, boardLabels, res) => {
             method: 'POST'
         });
 
+        if (cardResponse.status !== 200) return res.status(cardResponse.status).json({ msg: `${cardResponse.statusText}` });
         if (cardResponse.status === 200) return res.status(200).json({ msg: 'Card Successfully created' });
 
     } catch (err) {
